@@ -5,6 +5,8 @@ from rest_framework.generics import (ListAPIView,
                                      RetrieveUpdateAPIView,
                                      RetrieveDestroyAPIView,
                                      )
+from rest_framework.permissions import IsAuthenticated
+
 from post.api.paginations import PostPagination
 from post.api.permissions import IsOwner
 from post.api.serializers import PostSerializer, PostDetailSerializer, PostUpdateSerializer, PostCreateSerializer
@@ -24,6 +26,7 @@ class PostAPIView(ListAPIView):
 
 class PostCreateAPIView(CreateAPIView):
     serializer_class = PostCreateSerializer
+    permission_classes = [IsOwner]
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)

@@ -30,7 +30,8 @@ class PostDetailSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'content', 'image', 'created', 'modified', 'modified_by']
 
 
-class PostUpdateCreateSerializer(serializers.ModelSerializer):
+class PostUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ['title', 'content', 'image']
+

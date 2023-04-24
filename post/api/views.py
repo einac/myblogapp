@@ -1,10 +1,13 @@
 from rest_framework.filters import OrderingFilter, SearchFilter
-from rest_framework.generics import ListAPIView, RetrieveAPIView, RetrieveUpdateAPIView, CreateAPIView
-from rest_framework.mixins import DestroyModelMixin
-
+from rest_framework.generics import (ListAPIView,
+                                     RetrieveAPIView,
+                                     CreateAPIView,
+                                     RetrieveUpdateAPIView,
+                                     RetrieveDestroyAPIView,
+                                     )
 from post.api.paginations import PostPagination
 from post.api.permissions import IsOwner
-from post.api.serializers import PostSerializer, PostDetailSerializer, PostUpdateCreateSerializer, PostCreateSerializer
+from post.api.serializers import PostSerializer, PostDetailSerializer, PostUpdateSerializer, PostCreateSerializer
 from post.models import Post
 
 
@@ -19,7 +22,7 @@ class PostAPIView(ListAPIView):
         return queryset
 
 
-class PostAPICreateView(CreateAPIView):
+class PostCreateAPIView(CreateAPIView):
     serializer_class = PostCreateSerializer
 
     def post(self, request, *args, **kwargs):
@@ -35,14 +38,21 @@ class PostDetailAPIView(RetrieveAPIView):
     lookup_field = "slug"
 
 
-class PostUpdateAPIView(RetrieveUpdateAPIView, DestroyModelMixin):
-    serializer_class = PostUpdateCreateSerializer
+class PostUpdateAPIView(RetrieveUpdateAPIView):
+    serializer_class = PostUpdateSerializer
     queryset = Post.objects.all()
     lookup_field = "slug"
     permission_classes = [IsOwner]
 
     def perform_update(self, serializer):
         serializer.save(modified_by=self.request.user)
+
+
+class PostDeleteAPIView(RetrieveDestroyAPIView):
+    serializer_class = PostDetailSerializer
+    queryset = Post.objects.all()
+    lookup_field = "slug"
+    permission_classes = [IsOwner]
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)

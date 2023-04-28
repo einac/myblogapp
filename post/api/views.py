@@ -5,8 +5,6 @@ from rest_framework.generics import (ListAPIView,
                                      RetrieveUpdateAPIView,
                                      RetrieveDestroyAPIView,
                                      )
-from rest_framework.permissions import IsAuthenticated
-
 from post.api.paginations import PostPagination
 from post.api.permissions import IsOwner
 from post.api.serializers import PostSerializer, PostDetailSerializer, PostUpdateSerializer, PostCreateSerializer

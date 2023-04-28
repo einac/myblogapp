@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'post',
     'comment',
     'favourite',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
     ),
+    'DEFAULT_THROTTLE_RATES': {
+        'registerthrottle': '5/hour',
+
+    }
+
 }
 
 ROOT_URLCONF = 'core.urls'

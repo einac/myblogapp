@@ -24,5 +24,6 @@ urlpatterns = [
     path('api/post/', include("post.api.urls")),
     path('api/comment/', include("comment.api.urls")),
     path('api/favourite/', include("favourite.api.urls")),
+    path("api/user/", include("account.api.urls"), name='account'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
